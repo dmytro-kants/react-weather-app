@@ -3,9 +3,9 @@ import * as Styles from "./styles";
 
 const Footer = () => {
   return (
-    <BaseContainer>
-      <Styles.Footer>
-        <Styles.FooterContent>
+    <Styles.Footer>
+      <BaseContainer>
+        <Styles.FooterContainer>
           <Styles.FooterLeft>
             Data source:
             <Styles.FooterLink
@@ -17,9 +17,9 @@ const Footer = () => {
             </Styles.FooterLink>
           </Styles.FooterLeft>
           <Styles.FooterRight>dmytro.kantsiber7@gmail.com</Styles.FooterRight>
-        </Styles.FooterContent>
-      </Styles.Footer>
-    </BaseContainer>
+        </Styles.FooterContainer>
+      </BaseContainer>
+    </Styles.Footer>
   );
 };
 

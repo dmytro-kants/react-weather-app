@@ -1,13 +1,38 @@
 import styled from 'styled-components'
 
 export const Header = styled.div`
-    padding-top:10px;
+    width: 100vw;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+`
+export const HeaderContainer = styled.div`
     display: flex;
     justify-content: space-between;
-    height:50px;
+    align-items:center;
+    height:80px;
+  
 `
-
 export const Logo = styled.div`
     font-size:30px;
     font-weight:bold;
+`
+
+export const LoginButton = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width:100px;
+    height: 50px;
+    border-radius: 20px;
+    background-color: #cccccc; 
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    &:hover {
+        background-color: #dddddd;
+    }
+    >p {
+        font-size:20px;
+    }
 `
