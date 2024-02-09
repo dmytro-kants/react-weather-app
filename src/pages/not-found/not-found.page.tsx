@@ -4,11 +4,11 @@ import Layout from "../../layout/layout";
 
 const NotFoundPage = () => {
   return (
-    <BaseContainer>
-      <Layout>
+    <Layout>
+      <BaseContainer>
         <NotFoundPageComponent />
-      </Layout>
-    </BaseContainer>
+      </BaseContainer>
+    </Layout>
   );
 };
 

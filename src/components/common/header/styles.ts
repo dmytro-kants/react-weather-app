@@ -16,23 +16,6 @@ export const Logo = styled.div`
     font-weight:bold;
 `
 
-export const LoginButton = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width:100px;
-    height: 50px;
-    border-radius: 20px;
-    background-color: #cccccc; 
-    font-size: 16px;
-    text-align: center;
-    text-decoration: none;
-    cursor: pointer;
-    border: none;
-    &:hover {
-        background-color: #dddddd;
-    }
-    >p {
-        font-size:20px;
-    }
+export const Buttons = styled.div`
+    display:flex;
 `
