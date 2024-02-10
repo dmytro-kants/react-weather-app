@@ -21,13 +21,9 @@ const Layout: FC<LayoutProps> = ({ children }) => {
 
   return !userAuthCheck ? (
     <>
-      <header>
-        <Header />
-      </header>
+      <Header />
       <Styles.MainContainer>{children}</Styles.MainContainer>
-      <footer>
-        <Footer />
-      </footer>
+      <Footer />
     </>
   ) : (
     <MainSpinner />

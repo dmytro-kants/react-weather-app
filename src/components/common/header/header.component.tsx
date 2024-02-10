@@ -1,21 +1,15 @@
+import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux-hooks";
-import { loginAsync, logoutAsync } from "../../../store/slices/auth.slice";
 import BaseContainer from "../base-container/base-container.component";
 import AuthButton from "../buttons/auth-button/auth-button.component";
 import * as Styles from "./styles";
+import { logoutAsync } from "../../../store/slices/auth.slice";
 
 const Header = () => {
+  const isAuth = useAppSelector((state) => state.authReducer.isAuth);
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.authReducer.user);
-  const isAuth = useAppSelector((state) => state.authReducer.isAuth);
-
-  const handleLogin = () => {
-    try {
-      dispatch(loginAsync({ email: "1234@1.ua", password: "123das123" }));
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const handleLogout = () => {
     dispatch(logoutAsync({ email: user.email }));
@@ -25,14 +19,22 @@ const Header = () => {
     <Styles.Header>
       <BaseContainer>
         <Styles.HeaderContainer>
-          <Styles.Logo>Weather React App 🌤️</Styles.Logo>
+          <Link to="/">
+            <Styles.Logo>Weather React App 🌤️</Styles.Logo>
+          </Link>
           <Styles.Buttons>
             {isAuth ? (
               <AuthButton type="Logout" handleClick={handleLogout} />
             ) : (
               <>
-                <AuthButton type="Sign Up" />
-                <AuthButton type="Sign In" handleClick={handleLogin} />
+                <AuthButton
+                  type="Sign up"
+                  handleClick={() => navigate("/registration")}
+                />
+                <AuthButton
+                  type="Sign in"
+                  handleClick={() => navigate("/login")}
+                />
               </>
             )}
           </Styles.Buttons>

@@ -1,16 +1,25 @@
 import { Rings } from "react-loader-spinner";
+import BaseContainer from "../base-container/base-container.component";
+import * as Styles from "./styles";
 
 const MainSpinner = () => {
   return (
-    <Rings
-      visible={true}
-      height="800"
-      width="800"
-      color="#373737"
-      ariaLabel="rings-loading"
-      wrapperStyle={{}}
-      wrapperClass=""
-    />
+    <BaseContainer>
+      <Styles.MainSpinner>
+        <Styles.MainSpinnerText>
+          <p>Weather React App is loading...</p> <p>Please Wait!🙏</p>
+        </Styles.MainSpinnerText>
+        <Rings
+          visible={true}
+          height="600"
+          width="600"
+          color="#373737"
+          ariaLabel="rings-loading"
+          wrapperStyle={{}}
+          wrapperClass=""
+        />
+      </Styles.MainSpinner>
+    </BaseContainer>
   );
 };
 

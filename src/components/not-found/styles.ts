@@ -11,7 +11,7 @@ export const StyledLink = styled(Link)`
   }
 `;
 
-export const NotFoundPageComponent = styled.div`
+export const NotFoundComponent = styled.div`
   margin-top: 15vh;
   display: flex;
   flex-direction: column;

@@ -7,9 +7,9 @@ export type UserType = {
 
 export interface AuthSliceState {
     user: Partial<UserType>,
-    isAuth: Boolean,
-    userAuthCheck: Boolean,
-    isLoading: Boolean,
+    isAuth: boolean,
+    userAuthCheck: boolean,
+    isLoading: boolean,
     error: any,
 }
 

@@ -13,12 +13,14 @@ const initialState: AuthSliceState = {
     error: null,
 }
 
-export const loginAsync = createAsyncThunk('auth/login', async (credentials: LoginAsyncInterface, { rejectWithValue }) => {
+export const loginAsync = createAsyncThunk<{id:string, email:string, name:string},LoginAsyncInterface,{rejectValue:string}>(
+    'auth/login',
+    async (credentials, { rejectWithValue }) => {
     try {
       const { email, password } = credentials
       const response = await $api.post('/login', { email, password }, {withCredentials:true})
       localStorage.setItem('token', response.data.accessToken);
-      return { user: { id: response.data.id, email: response.data.email, name: response.data.name } };
+      return { id: response.data.id, email: response.data.email, name: response.data.name };
     } catch (e: any) {
       console.error("Error during login:", e);
       return rejectWithValue(e.response?.data?.message);
@@ -66,7 +68,7 @@ export const authSlice = createSlice({
         builder
         .addCase(loginAsync.fulfilled, (state, action) => {
             state.isAuth = true;
-            state.user = action.payload.user;
+            state.user = {...action.payload};
             state.error = null;
         })
         .addCase(loginAsync.rejected, (state, action) => {
@@ -92,6 +94,7 @@ export const authSlice = createSlice({
             state.isAuth = false
             state.error = action.payload;
             state.userAuthCheck = false;
+            localStorage.removeItem("token")
         })
         .addMatcher((action) => action.type.endsWith('/pending'), (state) => {
             state.isLoading = true;

@@ -2,7 +2,7 @@ import { FC } from "react";
 import * as Styles from "./styles";
 
 interface AuthButtonProps {
-  type: string;
+  type: "Sign in" | "Sign up" | "Logout";
   handleClick?: () => void;
 }
 

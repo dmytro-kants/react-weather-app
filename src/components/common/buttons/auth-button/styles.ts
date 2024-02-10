@@ -12,10 +12,10 @@ export const AuthButton = styled.div<AuthButtonStyleProps>`
     height: 50px;
     border-radius: 20px;
     background-color: ${(props) => {
-        if(props.$type === "Sign Up"){
+        if(props.$type === "Sign up"){
             return "#373737"
         }
-        if(props.$type === "Sign In" || props.$type === "Logout"){
+        if(props.$type === "Sign in" || props.$type === "Logout"){
             return "#868686"
         }
     }}; 
