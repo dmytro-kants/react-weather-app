@@ -2,10 +2,10 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const StyledLink = styled(Link)`
-  font-size:30px;
+  font-size: 30px;
   &:focus {
     color: black;
-  };
+  }
   &:visited {
     color: black;
   }
@@ -20,7 +20,7 @@ export const NotFoundComponent = styled.div`
 
 export const Text = styled.p`
   font-size: 52px;
-  margin:0;
+  margin: 0;
   color: black;
 `;
 

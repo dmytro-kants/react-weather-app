@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import BaseContainer from "../../components/common/base-container/base-container.component";
-import SignInForm from "../../components/signin/signin-form/signin-form.component";
+import SignInForm from "../../components/auth/signin-form.component";
 import { useAuth } from "../../hooks/useAuth";
 import { useEffect } from "react";
 
@@ -12,7 +12,7 @@ const SignInPage = () => {
     if (isAuth) {
       navigate("/");
     }
-  }, [isAuth]);
+  }, [isAuth, navigate]);
 
   return (
     <BaseContainer>

@@ -1,19 +1,12 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../../hooks/redux-hooks";
 import BaseContainer from "../base-container/base-container.component";
 import AuthButton from "../buttons/auth-button/auth-button.component";
 import * as Styles from "./styles";
-import { logoutAsync } from "../../../store/slices/auth.slice";
+import { useAuth } from "../../../hooks/useAuth";
 
 const Header = () => {
-  const isAuth = useAppSelector((state) => state.authReducer.isAuth);
+  const { handleLogout, isAuth, user } = useAuth();
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-  const user = useAppSelector((state) => state.authReducer.user);
-
-  const handleLogout = () => {
-    dispatch(logoutAsync({ email: user.email }));
-  };
 
   return (
     <Styles.Header>
@@ -24,7 +17,10 @@ const Header = () => {
           </Link>
           <Styles.Buttons>
             {isAuth ? (
-              <AuthButton type="Logout" handleClick={handleLogout} />
+              <AuthButton
+                type="Logout"
+                handleClick={() => handleLogout(user.email)}
+              />
             ) : (
               <>
                 <AuthButton
