@@ -3,9 +3,11 @@ import BaseContainer from "../base-container/base-container.component";
 import AuthButton from "../buttons/auth-button/auth-button.component";
 import * as Styles from "./styles";
 import { useAuth } from "../../../hooks/useAuth";
+import CartButton from "../buttons/cart-button/cart-button.component";
+import LangSwitcher from "../lang-switcher/lang-switcher.component";
 
 const Header = () => {
-  const { handleLogout, isAuth, user } = useAuth();
+  const { handleLogout, isAuth } = useAuth();
   const navigate = useNavigate();
 
   return (
@@ -13,22 +15,21 @@ const Header = () => {
       <BaseContainer>
         <Styles.HeaderContainer>
           <Link to="/">
-            <Styles.Logo>Weather React App 🌤️</Styles.Logo>
+            <Styles.Logo>Furniture React App 🛋️</Styles.Logo>
           </Link>
+          <LangSwitcher />
           <Styles.Buttons>
+            <CartButton handleClick={() => navigate("/cart")} />
             {isAuth ? (
-              <AuthButton
-                type="Logout"
-                handleClick={() => handleLogout(user.email)}
-              />
+              <AuthButton type="logout" handleClick={() => handleLogout()} />
             ) : (
               <>
                 <AuthButton
-                  type="Sign up"
+                  type="registration"
                   handleClick={() => navigate("/registration")}
                 />
                 <AuthButton
-                  type="Sign in"
+                  type="login"
                   handleClick={() => navigate("/login")}
                 />
               </>

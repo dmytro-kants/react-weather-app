@@ -1,24 +1,13 @@
 import styled from "styled-components";
 
-interface AuthButtonStyleProps {
-  $type: string;
-}
-
-export const AuthButton = styled.div<AuthButtonStyleProps>`
+export const CartButton = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   width: 120px;
   height: 50px;
   border-radius: 20px;
-  background-color: ${(props) => {
-    if (props.$type === "registration") {
-      return "#373737";
-    }
-    if (props.$type === "login" || props.$type === "logout") {
-      return "#868686";
-    }
-  }};
+  background-color: #54ba61;
   font-size: 16px;
   text-align: center;
   text-decoration: none;
@@ -26,7 +15,7 @@ export const AuthButton = styled.div<AuthButtonStyleProps>`
   border: none;
   margin-left: 20px;
   &:hover {
-    background-color: #a9a9a9;
+    background-color: #62e372;
   }
   > p {
     color: white;

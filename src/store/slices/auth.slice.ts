@@ -4,13 +4,13 @@ import {
   IAuthReturn,
   IAuthSliceState,
   ILogin,
-  ILogout,
   IRegistration,
   UserType,
-} from "../../types/slices/auth.types";
-import $api from "../../http/api";
+} from "../../types/auth/auth.types";
+import $api from "../../utils/api";
 import axios from "axios";
 import { API_URL } from "../../utils/constants";
+import { RootState } from "../store";
 
 const initialState: IAuthSliceState = {
   user: {},
@@ -66,20 +66,21 @@ export const registrationAsync = createAsyncThunk<
   }
 });
 
-export const logoutAsync = createAsyncThunk<
-  {},
-  ILogout,
-  { rejectValue: string }
->("auth/logout", async (credentials, { rejectWithValue }) => {
-  try {
-    const { email } = credentials;
-    localStorage.removeItem("token");
-    await $api.post("/logout", { email }, { withCredentials: true });
-    return {};
-  } catch (e: any) {
-    return rejectWithValue("Logout failed");
+export const logoutAsync = createAsyncThunk<{}, void, { rejectValue: string }>(
+  "auth/logout",
+  async (_, { rejectWithValue, getState }) => {
+    const state = getState() as RootState;
+    try {
+      localStorage.removeItem("token");
+      await $api.post("/logout", state.authReducer.user, {
+        withCredentials: true,
+      });
+      return {};
+    } catch (e: any) {
+      return rejectWithValue("Logout failed");
+    }
   }
-});
+);
 
 export const checkAuthAsync = createAsyncThunk<
   IAuthReturn,
@@ -143,8 +144,6 @@ export const authSlice = createSlice({
       })
       .addCase(checkAuthAsync.fulfilled, (state, action) => {
         state.isAuth = true;
-        console.log({ ...action.payload });
-
         state.user = { ...action.payload };
         state.error = null;
         state.userAuthCheck = false;

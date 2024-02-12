@@ -4,24 +4,37 @@ export const Footer = styled.div`
   background-color: #373737;
   color: #f2f3f4;
 `;
+
 export const FooterContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 24px;
   height: 80px;
 `;
+
 export const FooterLink = styled.a`
-  text-decoration: none;
-  font-weight: bold;
-  &:focus {
-    color: #f2f3f4;
-  }
-  &:visited {
-    color: #f2f3f4;
+  height: 50px;
+`;
+
+export const FooterLeft = styled.div`
+  display: flex;
+  > * {
+    padding-right: 20px;
   }
 `;
 
-export const FooterLeft = styled.div``;
+export const FooterRight = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 
-export const FooterRight = styled.div``;
+  > a {
+    color: white;
+    margin: 5px 0 5px 0;
+    text-decoration: none;
+    font-size: 18px;
+    &:visited {
+      color: black;
+    }
+  }
+`;

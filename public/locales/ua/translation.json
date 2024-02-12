@@ -1,0 +1,41 @@
+{
+  "header": {
+    "login": "Авторизація",
+    "registration": "Реєстрація",
+    "logout": "Вийти",
+    "cart": "Кошик"
+  },
+  "login_page": {
+    "login-text-1": "Увійдіть в Ваш аккаунт",
+    "login-text-2": "Введіть пошту та пароль",
+    "enter-email": "Введіть пошту...",
+    "enter-password": "Введіть пароль...",
+    "sign-in": "Увійти",
+    "create-new-account": "створити новий аккаунт",
+    "errors": {
+      "enter-email": "обов'язкове поле",
+      "enter-password": "обов'язкове поле",
+      "valid-email": "введіть валідний емейл"
+    }
+  },
+  "registration_page": {
+    "registration-text-1": "Реєстрація нового аккаунту",
+    "registration-text-2": "Введіть пошту, оберіть ім'я користувача та пароль",
+    "enter-email": "Введіть ваш емейл...",
+    "enter-username": "Оберіть ім'я користувача...",
+    "enter-password": "Придумайте пароль...",
+    "enter-password-confirm": "Підтвердіть обраний пароль...",
+    "sign-up": "Зареєструватись",
+    "already-have-account": "у Вас уже є аккаунт?",
+    "errors": {
+      "enter-email": "обов'язкове поле",
+      "enter-username": "обов'язкове поле",
+      "enter-password": "обов'язкове поле",
+      "enter-password-confirm": "обов'язкове поле",
+      "valid-email": "введіть валідний емейл",
+      "name-characters": "ім'я користувача має містити щонайменш 3 символа",
+      "password-characters": "пароль має містити щонайменш 8 символів",
+      "passwords-match": "паролі повинні співпадати"
+    }
+  }
+}

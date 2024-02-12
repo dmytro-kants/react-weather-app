@@ -4,7 +4,6 @@ import Footer from "../components/common/footer/footer.component";
 import Header from "../components/common/header/header.component";
 import MainSpinner from "../components/common/loading-spinners/main-spinner.component";
 import { useAuth } from "../hooks/useAuth";
-import { useWhyDidYouUpdate } from "ahooks";
 
 interface LayoutProps {
   children: ReactNode;
@@ -12,11 +11,7 @@ interface LayoutProps {
 
 const Layout: FC<LayoutProps> = ({ children }) => {
   const { userAuthCheck, handleRefreshToken } = useAuth();
-  useWhyDidYouUpdate("Layout", {
-    userAuthCheck,
-    handleRefreshToken,
-    children,
-  });
+
   useEffect(() => {
     handleRefreshToken();
   }, [handleRefreshToken]);

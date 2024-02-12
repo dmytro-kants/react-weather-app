@@ -41,12 +41,9 @@ export const useAuth = () => {
     [dispatch, navigate]
   );
 
-  const handleLogout = useCallback(
-    (email?: string) => {
-      dispatch(logoutAsync({ email }));
-    },
-    [dispatch]
-  );
+  const handleLogout = useCallback(() => {
+    dispatch(logoutAsync());
+  }, [dispatch]);
 
   const handleRefreshToken = useCallback(() => {
     dispatch(checkAuthAsync());

@@ -1,5 +1,22 @@
 import axios from "axios";
-import { API_URL } from "../utils/constants";
+import { API_URL } from "./constants";
+import { logoutAsync } from "../store/slices/auth.slice";
+import { RootState } from "../store/store";
+import { Action, AsyncThunkAction, Store } from "@reduxjs/toolkit";
+
+type AppStore = Store<RootState, Action> & {
+  dispatch: {
+    <ReturnType>(
+      asyncAction: AsyncThunkAction<ReturnType, any, any>
+    ): ReturnType;
+    <A extends Action>(action: A): A;
+  };
+};
+let store: AppStore | undefined;
+
+export const injectStore = (_store: AppStore) => {
+  store = _store;
+};
 
 const $api = axios.create({
   withCredentials: true,
@@ -30,6 +47,7 @@ $api.interceptors.response.use(
         localStorage.setItem("token", response.data.accessToken);
         return $api.request(originalRequest);
       } catch (e) {
+        store?.dispatch(logoutAsync());
         console.log("Не авторизований!");
       }
     }

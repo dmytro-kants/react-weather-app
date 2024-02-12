@@ -3,16 +3,19 @@ import * as Styles from "./styles";
 import { useAuth } from "../../hooks/useAuth";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { useTranslation } from "react-i18next";
 import { ISignInInputs } from "../../types/forms/forms.types";
 
-const schema = yup
-  .object({
-    email: yup.string().email().required(),
-    password: yup.string().required(),
-  })
-  .required();
-
 const SignInForm = () => {
+  const { t } = useTranslation();
+
+  const schema = yup.object({
+    email: yup
+      .string()
+      .email("login_page.errors.valid-email")
+      .required("login_page.errors.enter-email"),
+    password: yup.string().required("login_page.enter-password"),
+  });
   const { handleLogin } = useAuth();
   const {
     register,
@@ -21,35 +24,38 @@ const SignInForm = () => {
   } = useForm<ISignInInputs>({ resolver: yupResolver(schema) });
 
   const onSubmit: SubmitHandler<ISignInInputs> = (data) => handleLogin(data);
-
   return (
     <Styles.AuthFormWrapper>
-      <Styles.AuthTextTitle>Login to your account</Styles.AuthTextTitle>
+      <Styles.AuthTextTitle>
+        {t("login_page.login-text-1")}
+      </Styles.AuthTextTitle>
       <Styles.AuthTextDescription>
-        Enter your email and password
+        {t("login_page.login-text-2")}
       </Styles.AuthTextDescription>
       <Styles.AuthForm onSubmit={handleSubmit(onSubmit)}>
         <Styles.AuthInput
-          placeholder="Enter your email..."
+          placeholder={t("login_page.enter-email")}
           {...register("email")}
         />
         {errors.email?.message && (
-          <Styles.AuthErrorText>{errors.email?.message}</Styles.AuthErrorText>
+          <Styles.AuthErrorText>
+            {t(errors.email?.message)}
+          </Styles.AuthErrorText>
         )}
         <Styles.AuthInput
           type="password"
-          placeholder="Enter your password..."
+          placeholder={t("login_page.enter-password")}
           {...register("password")}
         />
         {errors.password?.message && (
           <Styles.AuthErrorText>
-            {errors.password?.message}
+            {t(errors.password?.message)}
           </Styles.AuthErrorText>
         )}
-        <Styles.AuthButton type="submit" value={"Sign in"} />
+        <Styles.AuthButton type="submit" value={t("login_page.sign-in")} />
       </Styles.AuthForm>
       <Styles.AuthRedirectLink to={`/registration`}>
-        create new account
+        {t("login_page.create-new-account")}
       </Styles.AuthRedirectLink>
     </Styles.AuthFormWrapper>
   );
