@@ -4,7 +4,7 @@ import {
   loginAsync,
   logoutAsync,
   registrationAsync,
-} from "../store/slices/auth.slice";
+} from "../store/slices/auth/auth.slice";
 import { ISignInInputs, ISignUpInputs } from "../types/forms/forms.types";
 import { useAppDispatch, useAppSelector } from "./redux-hooks";
 import { useNavigate } from "react-router-dom";

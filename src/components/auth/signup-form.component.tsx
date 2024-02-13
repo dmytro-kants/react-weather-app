@@ -4,7 +4,6 @@ import * as yup from "yup";
 import * as Styles from "./styles";
 import { ISignUpInputs } from "../../types/forms/forms.types";
 import { useAuth } from "../../hooks/useAuth";
-import { useTranslation } from "react-i18next";
 
 const schema = yup
   .object({
@@ -19,7 +18,6 @@ const schema = yup
   .required();
 
 const SignUpForm = () => {
-  const { t } = useTranslation();
   const { handleRegistration } = useAuth();
   const {
     register,

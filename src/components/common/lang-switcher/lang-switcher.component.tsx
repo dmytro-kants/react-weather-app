@@ -1,20 +1,20 @@
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "../../../hooks/useTranslations";
 import * as Styles from "./styles";
 
 const LangSwitcher = () => {
-  const { i18n } = useTranslation();
+  const { lang, setCurrentLang } = useTranslations();
   return (
     <Styles.LangSwitcher>
       <Styles.LangSwitcherOption
-        onClick={() => i18n.changeLanguage("ua")}
-        $isActive={i18n.resolvedLanguage === "ua" ? true : false}
+        onClick={() => setCurrentLang("ua")}
+        $isActive={lang === "ua" ? true : false}
       >
         УКР
       </Styles.LangSwitcherOption>
       <p style={{ fontSize: "20px", margin: 0, cursor: "default" }}>|</p>
       <Styles.LangSwitcherOption
-        onClick={() => i18n.changeLanguage("en")}
-        $isActive={i18n.resolvedLanguage === "en" ? true : false}
+        onClick={() => setCurrentLang("en")}
+        $isActive={lang === "en" ? true : false}
       >
         ENG
       </Styles.LangSwitcherOption>

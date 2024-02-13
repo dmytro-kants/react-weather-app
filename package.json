@@ -15,18 +15,13 @@
     "@types/react-redux": "^7.1.33",
     "ahooks": "^3.7.10",
     "axios": "^1.6.7",
-    "i18next": "^23.8.2",
-    "i18next-browser-languagedetector": "^7.2.0",
-    "i18next-http-backend": "^2.4.3",
-    "i18next-resources-for-ts": "^1.5.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.50.1",
-    "react-i18next": "^14.0.5",
     "react-loader-spinner": "^6.1.6",
     "react-redux": "^9.1.0",
     "react-router-dom": "^6.22.0",
-    "react-scripts": "5.0.1",
+    "react-scripts": "^5.0.1",
     "react-toastify": "^10.0.4",
     "styled-components": "^6.1.8",
     "typescript": "^4.9.5",
@@ -37,8 +32,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "interface": "i18next-resources-for-ts interface -i ./public/locales -o ./src/types/i18n/resources.d.ts"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
@@ -57,5 +51,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.202"
   }
 }

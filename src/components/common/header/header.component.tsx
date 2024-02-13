@@ -25,11 +25,11 @@ const Header = () => {
             ) : (
               <>
                 <AuthButton
-                  type="registration"
+                  type="signup"
                   handleClick={() => navigate("/registration")}
                 />
                 <AuthButton
-                  type="login"
+                  type="signin"
                   handleClick={() => navigate("/login")}
                 />
               </>

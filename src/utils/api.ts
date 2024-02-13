@@ -1,6 +1,6 @@
 import axios from "axios";
 import { API_URL } from "./constants";
-import { logoutAsync } from "../store/slices/auth.slice";
+import { logoutAsync } from "../store/slices/auth/auth.slice";
 import { RootState } from "../store/store";
 import { Action, AsyncThunkAction, Store } from "@reduxjs/toolkit";
 

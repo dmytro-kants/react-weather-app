@@ -6,11 +6,11 @@ import {
   ILogin,
   IRegistration,
   UserType,
-} from "../../types/auth/auth.types";
-import $api from "../../utils/api";
+} from "./auth.types";
+import $api from "../../../utils/api";
 import axios from "axios";
-import { API_URL } from "../../utils/constants";
-import { RootState } from "../store";
+import { API_URL } from "../../../utils/constants";
+import { RootState } from "../../store";
 
 const initialState: IAuthSliceState = {
   user: {},

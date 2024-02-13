@@ -1,16 +1,17 @@
 import { FC } from "react";
 import * as Styles from "./styles";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "../../../../hooks/useTranslations";
 
 interface CartButtonProps {
   handleClick?: () => void;
 }
 
 const CartButton: FC<CartButtonProps> = ({ handleClick }) => {
-  const { t } = useTranslation();
+  const { t } = useTranslations();
+
   return (
     <Styles.CartButton onClick={handleClick}>
-      <p>{t("header.cart")}</p>
+      <p>{t["header.buttons.cart"]}</p>
     </Styles.CartButton>
   );
 };

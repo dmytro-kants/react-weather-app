@@ -1,17 +1,17 @@
 import { FC } from "react";
 import * as Styles from "./styles";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "../../../../hooks/useTranslations";
 
 interface AuthButtonProps {
-  type: "login" | "registration" | "logout";
+  type: "signin" | "signup" | "logout";
   handleClick?: () => void;
 }
 
 const AuthButton: FC<AuthButtonProps> = ({ type, handleClick }) => {
-  const { t } = useTranslation();
+  const { t } = useTranslations();
   return (
     <Styles.AuthButton $type={type} onClick={handleClick}>
-      <p>{t(`header.${type}`)}</p>
+      <p>{t[`header.buttons.${type}`]}</p>
     </Styles.AuthButton>
   );
 };
