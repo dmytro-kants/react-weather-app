@@ -3,7 +3,10 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import * as yup from "yup";
 import * as Styles from "./styles";
 import { ISignUpInputs } from "../../types/forms/forms.types";
-import { useAuth } from "../../hooks/useAuth";
+import { useRegisterUserMutation } from "../../store/api/api/auth.api";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const schema = yup
   .object({
@@ -18,15 +21,38 @@ const schema = yup
   .required();
 
 const SignUpForm = () => {
-  const { handleRegistration } = useAuth();
+  const navigate = useNavigate();
+
+  const [registerUser, { isSuccess, isError, error }] =
+    useRegisterUserMutation();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<ISignUpInputs>({ resolver: yupResolver(schema) });
 
-  const onSubmit: SubmitHandler<ISignUpInputs> = (data) =>
-    handleRegistration(data);
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success("Registered successfully");
+      navigate("/login");
+    }
+    if (isError) {
+      if (Array.isArray((error as any).data.error)) {
+        (error as any).data.error.forEach((el: any) =>
+          toast.error(el.message, {
+            position: "top-right",
+          })
+        );
+      } else {
+        toast.error((error as any).data.message, {
+          position: "top-right",
+        });
+      }
+    }
+  }, [isError, isSuccess, navigate, error]);
+
+  const onSubmit: SubmitHandler<ISignUpInputs> = (data) => registerUser(data);
 
   return (
     <Styles.AuthFormWrapper>

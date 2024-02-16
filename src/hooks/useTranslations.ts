@@ -1,4 +1,4 @@
-import { setLang } from "../store/slices/i18n/i18n.slice";
+import { setLang, addTrans } from "../store/slices/i18n/i18n.slice";
 import { translations } from "../utils/translations";
 import { useAppDispatch, useAppSelector } from "./redux-hooks";
 
@@ -11,6 +11,7 @@ interface IUseTranslations {
     key: string,
     obj: typeof translations.en
   ) => key is keyof typeof translations.en;
+  addTranslate: (trans: { [key: string]: string }) => void;
 }
 
 export const useTranslations = (): IUseTranslations => {
@@ -24,14 +25,17 @@ export const useTranslations = (): IUseTranslations => {
     (state) => state.i18nReducer.supportedLanguages
   );
 
-  function isKeyOf(key: string, obj: typeof t): key is keyof typeof t {
+  const isKeyOf = (key: string, obj: typeof t): key is keyof typeof t => {
     return key in obj;
-  }
+  };
+  const addTranslate = (trans: { [key: string]: string }) =>
+    dispatch(addTrans(trans));
 
   return {
     t,
     isKeyOf,
     setCurrentLang,
+    addTranslate,
     lang,
     supportedLanguages,
   };

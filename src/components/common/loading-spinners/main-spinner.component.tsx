@@ -1,5 +1,5 @@
 import { Rings } from "react-loader-spinner";
-import BaseContainer from "../base-container/base-container.component";
+import BaseContainer from "../base-container/base-container.wrapper";
 import * as Styles from "./styles";
 
 const MainSpinner = () => {

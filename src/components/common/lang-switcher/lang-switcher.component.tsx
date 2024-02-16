@@ -3,13 +3,14 @@ import * as Styles from "./styles";
 
 const LangSwitcher = () => {
   const { lang, setCurrentLang } = useTranslations();
+
   return (
     <Styles.LangSwitcher>
       <Styles.LangSwitcherOption
         onClick={() => setCurrentLang("ua")}
         $isActive={lang === "ua" ? true : false}
       >
-        УКР
+        UA
       </Styles.LangSwitcherOption>
       <p style={{ fontSize: "20px", margin: 0, cursor: "default" }}>|</p>
       <Styles.LangSwitcherOption

@@ -5,6 +5,7 @@ export const translations = {
     "header.buttons.signup": "Sign up",
     "header.buttons.logout": "Logout",
     "signin_page.errors.required": "required field",
+    "signin_page.toastError": "Sign in error",
   },
   ua: {
     "header.buttons.cart": "Кошик",
@@ -12,5 +13,6 @@ export const translations = {
     "header.buttons.signup": "Реєстрація",
     "header.buttons.logout": "Вийти",
     "signin_page.errors.required": "обов'язкове поле",
+    "signin_page.toastError": "Помилка авторизації",
   },
 };

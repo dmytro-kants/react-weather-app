@@ -1,24 +1,15 @@
-import { useEffect, useState } from "react";
-import BaseContainer from "../../components/common/base-container/base-container.component";
-import $api from "../../utils/api";
+import { useGetAllUsersQuery } from "../../store/api/api/auth.api";
+import BaseContainer from "../../components/common/base-container/base-container.wrapper";
 
 const MainPage = () => {
-  const [items, setItems] = useState<any>([]);
-  const handleClick = async () => {
-    try {
-      const result = await $api.get("http://localhost:5000/api/getAllUsers");
-      setItems(result);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  useEffect(() => {
-    console.log(items);
-  }, [items]);
-
+  const { data } = useGetAllUsersQuery(null);
   return (
     <BaseContainer>
-      <div onClick={handleClick}>MainPage</div>
+      <div>MainPage</div>
+      {data &&
+        data.map((e: any) => {
+          return <p>{e.email}</p>;
+        })}
     </BaseContainer>
   );
 };

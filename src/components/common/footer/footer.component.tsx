@@ -1,4 +1,4 @@
-import BaseContainer from "../base-container/base-container.component";
+import BaseContainer from "../base-container/base-container.wrapper";
 import * as Styles from "./styles";
 
 import { ReactComponent as FacebookSVG } from "../../../assets/icons/5296499_fb_facebook_facebook logo_icon.svg";

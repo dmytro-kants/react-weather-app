@@ -1,11 +1,11 @@
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../hooks/useAuth";
 import { useEffect } from "react";
 import { BaseContainer } from "../../components/common/base-container/styles";
 import SignUpForm from "../../components/auth/signup-form.component";
+import { useAppSelector } from "../../hooks/redux-hooks";
 
 const SignUpPage = () => {
-  const { isAuth } = useAuth();
+  const { isAuth } = useAppSelector((state) => state.authReducer);
   const navigate = useNavigate();
 
   useEffect(() => {

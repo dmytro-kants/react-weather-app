@@ -1,4 +1,4 @@
-import BaseContainer from "../../components/common/base-container/base-container.component";
+import BaseContainer from "../../components/common/base-container/base-container.wrapper";
 
 const CartPage = () => {
   return <BaseContainer>CartPage</BaseContainer>;

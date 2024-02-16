@@ -1,5 +1,5 @@
 import { FC, ReactNode } from "react";
-import Layout from "../layout/layout";
+import Layout from "../../../layout/layout";
 
 interface RouterElementProps {
   page: ReactNode;
