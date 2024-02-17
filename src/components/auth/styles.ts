@@ -45,7 +45,7 @@ export const AuthTextTitle = styled.h2`
 `;
 
 export const AuthTextDescription = styled.p`
-  margin-bottom: 30px;
+  margin: 30px 0;
 `;
 
 export const AuthRedirectLink = styled(Link)`

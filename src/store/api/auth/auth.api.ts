@@ -52,12 +52,11 @@ export const authApi = createApi({
         };
       },
     }),
-    getAllUsers: builder.query({
+    getAllBeds: builder.query<any, void>({
       query() {
         return {
-          url: "getAllUsers",
+          url: "getAllBeds",
           method: "GET",
-          credentials: "include",
         };
       },
     }),
@@ -69,5 +68,5 @@ export const {
   useLoginUserMutation,
   useLogoutUserMutation,
   useCheckUserQuery,
-  useGetAllUsersQuery,
+  useGetAllBedsQuery,
 } = authApi;

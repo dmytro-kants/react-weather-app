@@ -5,20 +5,21 @@ import * as Styles from "./styles";
 import CartButton from "../buttons/cart-button/cart-button.component";
 import LangSwitcher from "../lang-switcher/lang-switcher.component";
 import { useAppSelector } from "../../../hooks/redux-hooks";
-import { useLogoutUserMutation } from "../../../store/api/api/auth.api";
+import { useLogoutUserMutation } from "../../../store/api/auth/auth.api";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
+import { useTranslations } from "../../../hooks/useTranslations";
 
 const Header = () => {
   const { isAuth, user } = useAppSelector((state) => state.authReducer);
   const navigate = useNavigate();
-
+  const { t } = useTranslations();
   const [logoutUser, { isError, isSuccess, isLoading, error }] =
     useLogoutUserMutation();
 
   useEffect(() => {
     if (isSuccess) {
-      toast.success("Logged out successfully");
+      toast.success(t["logout.success"]);
     }
     if (isError) {
       if (Array.isArray((error as any).data.error)) {
@@ -28,12 +29,12 @@ const Header = () => {
           })
         );
       } else {
-        toast.error((error as any).data.message, {
+        toast.error(t["logout.error"], {
           position: "top-right",
         });
       }
     }
-  }, [isLoading, isError, isSuccess, error]);
+  }, [isLoading, isError, isSuccess, error, t]);
 
   return (
     <Styles.Header>

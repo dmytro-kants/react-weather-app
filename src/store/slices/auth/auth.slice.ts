@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { IAuthSliceState } from "../../../types/auth.types";
-import { authApi } from "../../api/api/auth.api";
+import { authApi } from "../../api/auth/auth.api";
 
 const initialState: IAuthSliceState = {
   user: {},

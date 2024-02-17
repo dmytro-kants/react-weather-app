@@ -2,27 +2,37 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as yup from "yup";
 import * as Styles from "./styles";
-import { useRegisterUserMutation } from "../../store/api/api/auth.api";
+import { useRegisterUserMutation } from "../../store/api/auth/auth.api";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { ISignUpInputs } from "../../types/auth.types";
+import { useTranslations } from "../../hooks/useTranslations";
 
-const schema = yup
-  .object({
-    email: yup.string().email().required("Enter your email..."),
-    name: yup.string().required().min(3).max(24),
-    password: yup.string().required().min(8).max(32),
-    confirmPassword: yup
-      .string()
-      .required()
-      .oneOf([yup.ref("password")], "Passwords must match"),
-  })
-  .required();
+const schema = yup.object({
+  email: yup
+    .string()
+    .email("signup_page.errors.isEmail")
+    .required("signup_page.errors.required"),
+  name: yup
+    .string()
+    .required("signup_page.errors.required")
+    .min(3, "signup_page.errors.minName")
+    .max(24, "signup_page.errors.maxName"),
+  password: yup
+    .string()
+    .required("signup_page.errors.required")
+    .min(8, "signup_page.errors.minPassword")
+    .max(32, "signup_page.errors.minPassword"),
+  confirmPassword: yup
+    .string()
+    .required("signup_page.errors.required")
+    .oneOf([yup.ref("password")], "signup_page.errors.passwordsMatch"),
+});
 
 const SignUpForm = () => {
   const navigate = useNavigate();
-
+  const { t, isKeyOf } = useTranslations();
   const [registerUser, { isSuccess, isError, error }] =
     useRegisterUserMutation();
 
@@ -34,7 +44,7 @@ const SignUpForm = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      toast.success("Registered successfully");
+      toast.success(t["signup_page.toast.success"]);
       navigate("/login");
     }
     if (isError) {
@@ -45,60 +55,66 @@ const SignUpForm = () => {
           })
         );
       } else {
-        toast.error((error as any).data.message, {
+        toast.error(t["signup_page.toast.error"], {
           position: "top-right",
         });
       }
     }
-  }, [isError, isSuccess, navigate, error]);
+  }, [isError, isSuccess, navigate, error, t]);
 
   const onSubmit: SubmitHandler<ISignUpInputs> = (data) => registerUser(data);
 
   return (
     <Styles.AuthFormWrapper>
-      <Styles.AuthTextTitle>Register new account</Styles.AuthTextTitle>
+      <Styles.AuthTextTitle>{t["signup_page.text.one"]}</Styles.AuthTextTitle>
       <Styles.AuthTextDescription>
-        Enter your email, choose username and password
+        {t["signup_page.text.two"]}
       </Styles.AuthTextDescription>
       <Styles.AuthForm onSubmit={handleSubmit(onSubmit)}>
         <Styles.AuthInput
-          placeholder="Enter your email..."
+          placeholder={t["signup_page.text.enter-email"]}
           {...register("email")}
         />
-        {errors.email?.message && (
-          <Styles.AuthErrorText>{errors.email?.message}</Styles.AuthErrorText>
+        {errors.email?.message && isKeyOf(errors.email?.message, t) && (
+          <Styles.AuthErrorText>
+            {t[errors.email?.message]}
+          </Styles.AuthErrorText>
         )}
         <Styles.AuthInput
-          placeholder="Choose your username..."
+          placeholder={t["signup_page.text.enter-username"]}
           {...register("name")}
         />
-        {errors.name?.message && (
-          <Styles.AuthErrorText>{errors.name?.message}</Styles.AuthErrorText>
+        {errors.name?.message && isKeyOf(errors.name?.message, t) && (
+          <Styles.AuthErrorText>{t[errors.name?.message]}</Styles.AuthErrorText>
         )}
         <Styles.AuthInput
           type="password"
-          placeholder="Enter your password..."
+          placeholder={t["signup_page.text.enter-password"]}
           {...register("password")}
         />
-        {errors.password?.message && (
+        {errors.password?.message && isKeyOf(errors.password?.message, t) && (
           <Styles.AuthErrorText>
-            {errors.password?.message}
+            {t[errors.password?.message]}
           </Styles.AuthErrorText>
         )}
         <Styles.AuthInput
           type="password"
-          placeholder="Confirm your password..."
+          placeholder={t["signup_page.text.confirm-password"]}
           {...register("confirmPassword")}
         />
-        {errors.confirmPassword?.message && (
-          <Styles.AuthErrorText>
-            {errors.confirmPassword?.message}
-          </Styles.AuthErrorText>
-        )}
-        <Styles.AuthButton type="submit" value={"Sign up"} />
+        {errors.confirmPassword?.message &&
+          isKeyOf(errors.confirmPassword?.message, t) && (
+            <Styles.AuthErrorText>
+              {t[errors.confirmPassword?.message]}
+            </Styles.AuthErrorText>
+          )}
+        <Styles.AuthButton
+          type="submit"
+          value={t["signup_page.text.sign-up"]}
+        />
       </Styles.AuthForm>
       <Styles.AuthRedirectLink to={`/login`}>
-        already have an account?
+        {t["signup_page.text.alredy-have-account"]}
       </Styles.AuthRedirectLink>
     </Styles.AuthFormWrapper>
   );

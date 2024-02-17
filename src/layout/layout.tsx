@@ -3,7 +3,7 @@ import * as Styles from "./styles";
 import Footer from "../components/common/footer/footer.component";
 import Header from "../components/common/header/header.component";
 import MainSpinner from "../components/common/loading-spinners/main-spinner.component";
-import { useCheckUserQuery } from "../store/api/api/auth.api";
+import { useCheckUserQuery } from "../store/api/auth/auth.api";
 
 interface LayoutProps {
   children: ReactNode;
