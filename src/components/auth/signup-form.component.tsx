@@ -2,11 +2,11 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as yup from "yup";
 import * as Styles from "./styles";
-import { ISignUpInputs } from "../../types/forms/forms.types";
 import { useRegisterUserMutation } from "../../store/api/api/auth.api";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { ISignUpInputs } from "../../types/auth.types";
 
 const schema = yup
   .object({

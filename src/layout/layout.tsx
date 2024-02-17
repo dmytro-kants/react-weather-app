@@ -10,8 +10,7 @@ interface LayoutProps {
 }
 
 const Layout: FC<LayoutProps> = ({ children }) => {
-  const { isLoading } = useCheckUserQuery(null);
-
+  const { isLoading } = useCheckUserQuery();
   return !isLoading ? (
     <>
       <Header />

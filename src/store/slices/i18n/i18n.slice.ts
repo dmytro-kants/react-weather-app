@@ -3,7 +3,7 @@ import {
   defaultLanguage,
   supportedLanguages,
 } from "../../../utils/i18n.config";
-import { II18nSliceState } from "./i18n.types";
+import { II18nSliceState } from "../../../types/i18n.types";
 import { translations } from "../../../utils/translations";
 
 const initialState: II18nSliceState = {

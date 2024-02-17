@@ -1,4 +1,4 @@
-import { translations } from "../../../utils/translations";
+import { translations } from "../utils/translations";
 
 interface Translations {
   [key: string]: typeof translations.en;

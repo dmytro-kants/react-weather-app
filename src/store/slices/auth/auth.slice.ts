@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { IAuthSliceState } from "./auth.types";
+import { IAuthSliceState } from "../../../types/auth.types";
 import { authApi } from "../../api/api/auth.api";
 
 const initialState: IAuthSliceState = {
@@ -26,7 +26,7 @@ export const authSlice = createSlice({
         authApi.endpoints.loginUser.matchFulfilled,
         (state, { payload }) => {
           localStorage.setItem("token", payload.accessToken);
-          state.user = { ...payload };
+          state.user = { ...payload.user };
           state.isAuth = true;
         }
       )
@@ -39,7 +39,8 @@ export const authSlice = createSlice({
         authApi.endpoints.checkUser.matchFulfilled,
         (state, { payload }) => {
           state.isAuth = true;
-          state.user = payload;
+          localStorage.setItem("token", payload.accessToken);
+          state.user = { ...payload.user };
           state.error = null;
           state.userAuthCheck = false;
         }
@@ -47,6 +48,7 @@ export const authSlice = createSlice({
       .addMatcher(authApi.endpoints.checkUser.matchRejected, (state) => {
         state.isAuth = false;
         state.error = null;
+        state.user = {};
         state.userAuthCheck = false;
         localStorage.removeItem("token");
       });

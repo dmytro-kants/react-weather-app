@@ -46,7 +46,10 @@ const Header = () => {
           <Styles.Buttons>
             <CartButton handleClick={() => navigate("/cart")} />
             {isAuth ? (
-              <AuthButton type="logout" handleClick={() => logoutUser(user)} />
+              <AuthButton
+                type="logout"
+                handleClick={() => logoutUser({ user })}
+              />
             ) : (
               <>
                 <AuthButton

@@ -2,12 +2,12 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import * as Styles from "./styles";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { ISignInInputs } from "../../types/forms/forms.types";
 import { useTranslations } from "../../hooks/useTranslations";
 import { useLoginUserMutation } from "../../store/api/api/auth.api";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { ISignInInputs } from "../../types/auth.types";
 
 const SignInForm = () => {
   const { t, isKeyOf } = useTranslations();

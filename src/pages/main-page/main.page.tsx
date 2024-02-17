@@ -8,7 +8,7 @@ const MainPage = () => {
       <div>MainPage</div>
       {data &&
         data.map((e: any) => {
-          return <p>{e.email}</p>;
+          return <p key={e.email}>{e.email}</p>;
         })}
     </BaseContainer>
   );

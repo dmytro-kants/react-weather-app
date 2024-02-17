@@ -1,13 +1,20 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import baseQueryWithReauth from "../../../utils/baseQueryWithReauth";
-import { IGenericResponse } from "./auth.types";
-import { ISignUpInputs } from "../../../types/forms/forms.types";
+import {
+  ILogoutInputs,
+  ILogoutResponse,
+  IRefreshResponse,
+  ISignInInputs,
+  ISignInResponse,
+  ISignUpInputs,
+  ISignUpResponse,
+} from "../../../types/auth.types";
 
 export const authApi = createApi({
   reducerPath: "authApi",
   baseQuery: baseQueryWithReauth,
   endpoints: (builder) => ({
-    registerUser: builder.mutation<IGenericResponse, ISignUpInputs>({
+    registerUser: builder.mutation<ISignUpResponse, ISignUpInputs>({
       query(data) {
         return {
           url: "registration",
@@ -16,7 +23,7 @@ export const authApi = createApi({
         };
       },
     }),
-    loginUser: builder.mutation({
+    loginUser: builder.mutation<ISignInResponse, ISignInInputs>({
       query(data) {
         return {
           url: "login",
@@ -26,7 +33,7 @@ export const authApi = createApi({
         };
       },
     }),
-    logoutUser: builder.mutation({
+    logoutUser: builder.mutation<ILogoutResponse, ILogoutInputs>({
       query(data) {
         return {
           url: "logout",
@@ -36,7 +43,7 @@ export const authApi = createApi({
         };
       },
     }),
-    checkUser: builder.query({
+    checkUser: builder.query<IRefreshResponse, void>({
       query() {
         return {
           url: "refresh",
