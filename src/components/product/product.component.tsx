@@ -1,12 +1,12 @@
 import { useParams } from "react-router-dom";
 import { useGetSingleProductQuery } from "../../store/api/products/products.api";
-import { useTranslations } from "../../hooks/useTranslations";
 import ProductSpinner from "../common/loading-spinners/product-spinner/product-spinner";
 import ErrorComponent from "../common/error/error.component";
+import * as Styles from "./styles";
+import ImageViewerComponent from "./image-viewer/image-viewer.component";
 
 const ProductComponent = () => {
   const { productCode } = useParams();
-  const { lang } = useTranslations();
   const { data, isLoading, isSuccess, isError } =
     useGetSingleProductQuery(productCode);
   console.log(data);
@@ -21,7 +21,11 @@ const ProductComponent = () => {
     return <ErrorComponent status={404} />;
   }
   if (isSuccess) {
-    return <div>{data[lang].name}</div>;
+    return (
+      <Styles.ProductComponent>
+        <ImageViewerComponent images={data.images} />
+      </Styles.ProductComponent>
+    );
   }
   return null;
 };
