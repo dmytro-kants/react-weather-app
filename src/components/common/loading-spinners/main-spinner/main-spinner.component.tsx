@@ -1,5 +1,5 @@
 import { Rings } from "react-loader-spinner";
-import BaseContainer from "../base-container/base-container.wrapper";
+import BaseContainer from "../../base-container/base-container.wrapper";
 import * as Styles from "./styles";
 
 const MainSpinner = () => {
@@ -11,8 +11,8 @@ const MainSpinner = () => {
         </Styles.MainSpinnerText>
         <Rings
           visible={true}
-          height="600"
-          width="600"
+          height="400"
+          width="400"
           color="#373737"
           ariaLabel="rings-loading"
           wrapperStyle={{}}

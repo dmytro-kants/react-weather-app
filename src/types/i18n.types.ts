@@ -5,7 +5,9 @@ interface Translations {
 }
 
 export interface II18nSliceState {
-  lang: string;
+  lang: Languages;
   supportedLanguages: Record<string, string>;
   translations: Translations;
 }
+
+export type Languages = "en" | "ua";

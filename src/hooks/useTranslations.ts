@@ -1,11 +1,12 @@
 import { setLang, addTrans } from "../store/slices/i18n/i18n.slice";
+import { Languages } from "../types/i18n.types";
 import { translations } from "../utils/translations";
 import { useAppDispatch, useAppSelector } from "./redux-hooks";
 
 interface IUseTranslations {
   t: typeof translations.en;
-  setCurrentLang: (lang: string) => void;
-  lang: string;
+  setCurrentLang: (lang: Languages) => void;
+  lang: Languages;
   supportedLanguages: Record<string, string>;
   isKeyOf: (
     key: string,
@@ -19,7 +20,7 @@ export const useTranslations = (): IUseTranslations => {
   const t = useAppSelector(
     (state) => state.i18nReducer.translations[state.i18nReducer.lang]
   );
-  const setCurrentLang = (lang: string) => dispatch(setLang(lang));
+  const setCurrentLang = (lang: Languages) => dispatch(setLang(lang));
   const lang = useAppSelector((state) => state.i18nReducer.lang);
   const supportedLanguages = useAppSelector(
     (state) => state.i18nReducer.supportedLanguages

@@ -9,6 +9,7 @@ import { useLogoutUserMutation } from "../../../store/api/auth/auth.api";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 import { useTranslations } from "../../../hooks/useTranslations";
+import ProfileButton from "../buttons/profile-button/profile-button.component";
 
 const Header = () => {
   const { isAuth, user } = useAppSelector((state) => state.authReducer);
@@ -47,10 +48,13 @@ const Header = () => {
           <Styles.Buttons>
             <CartButton handleClick={() => navigate("/cart")} />
             {isAuth ? (
-              <AuthButton
-                type="logout"
-                handleClick={() => logoutUser({ user })}
-              />
+              <>
+                <ProfileButton handleClick={() => navigate("/profile")} />
+                <AuthButton
+                  type="logout"
+                  handleClick={() => logoutUser({ user })}
+                />
+              </>
             ) : (
               <>
                 <AuthButton

@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const StyledLink = styled(Link)`
+  padding-top: 30px;
   font-size: 30px;
   &:focus {
     color: black;
@@ -27,4 +28,5 @@ export const Text = styled.p`
 export const ErrorText = styled.p`
   font-size: 48px;
   color: red;
+  padding-top: 30px;
 `;

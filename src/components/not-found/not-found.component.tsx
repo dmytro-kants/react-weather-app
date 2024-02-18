@@ -1,17 +1,15 @@
+import { useTranslations } from "../../hooks/useTranslations";
 import * as Styles from "./styles";
-import { useRouteError } from "react-router-dom";
 
 const NotFoundComponent = () => {
-  const error = useRouteError();
+  const { t } = useTranslations();
 
   return (
     <Styles.NotFoundComponent>
-      <Styles.Text>Йой... Такої сторінки не існує! 😓</Styles.Text>
-      <Styles.ErrorText>
-        {(error as { statusText?: string })?.statusText ||
-          (error as Error)?.message}
-      </Styles.ErrorText>
-      <Styles.StyledLink to="/">Повернутись на головну</Styles.StyledLink>
+      <Styles.Text>{t["not_found_page.text"]}</Styles.Text>
+      <Styles.StyledLink to="/">
+        {t["not_found_page.returnLink"]}
+      </Styles.StyledLink>
     </Styles.NotFoundComponent>
   );
 };

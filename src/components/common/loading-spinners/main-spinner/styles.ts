@@ -12,6 +12,7 @@ export const MainSpinnerText = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-top: 20px;
   > p {
     font-size: 48px;
     font-weight: bold;

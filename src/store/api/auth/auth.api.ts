@@ -15,7 +15,7 @@ export const authApi = createApi({
   baseQuery: baseQueryWithReauth,
   endpoints: (builder) => ({
     registerUser: builder.mutation<ISignUpResponse, ISignUpInputs>({
-      query(data) {
+      query: (data) => {
         return {
           url: "registration",
           method: "POST",
@@ -24,7 +24,7 @@ export const authApi = createApi({
       },
     }),
     loginUser: builder.mutation<ISignInResponse, ISignInInputs>({
-      query(data) {
+      query: (data) => {
         return {
           url: "login",
           method: "POST",
@@ -34,7 +34,7 @@ export const authApi = createApi({
       },
     }),
     logoutUser: builder.mutation<ILogoutResponse, ILogoutInputs>({
-      query(data) {
+      query: (data) => {
         return {
           url: "logout",
           method: "POST",
@@ -44,19 +44,11 @@ export const authApi = createApi({
       },
     }),
     checkUser: builder.query<IRefreshResponse, void>({
-      query() {
+      query: () => {
         return {
           url: "refresh",
           method: "GET",
           credentials: "include",
-        };
-      },
-    }),
-    getAllBeds: builder.query<any, void>({
-      query() {
-        return {
-          url: "getAllBeds",
-          method: "GET",
         };
       },
     }),
@@ -68,5 +60,4 @@ export const {
   useLoginUserMutation,
   useLogoutUserMutation,
   useCheckUserQuery,
-  useGetAllBedsQuery,
 } = authApi;

@@ -3,7 +3,7 @@ import {
   defaultLanguage,
   supportedLanguages,
 } from "../../../utils/i18n.config";
-import { II18nSliceState } from "../../../types/i18n.types";
+import { II18nSliceState, Languages } from "../../../types/i18n.types";
 import { translations } from "../../../utils/translations";
 
 const initialState: II18nSliceState = {
@@ -16,7 +16,7 @@ export const i18nSlice = createSlice({
   name: "i18n",
   initialState,
   reducers: {
-    setLang: (state, action: PayloadAction<string>) => {
+    setLang: (state, action: PayloadAction<Languages>) => {
       state.lang = action.payload;
     },
     addTrans: (state, action: PayloadAction<{ [key: string]: string }>) => {
