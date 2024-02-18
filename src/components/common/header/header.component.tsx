@@ -5,37 +5,11 @@ import * as Styles from "./styles";
 import CartButton from "../buttons/cart-button/cart-button.component";
 import LangSwitcher from "../lang-switcher/lang-switcher.component";
 import { useAppSelector } from "../../../hooks/redux-hooks";
-import { useLogoutUserMutation } from "../../../store/api/auth/auth.api";
-import { useEffect } from "react";
-import { toast } from "react-toastify";
-import { useTranslations } from "../../../hooks/useTranslations";
 import ProfileButton from "../buttons/profile-button/profile-button.component";
 
 const Header = () => {
-  const { isAuth, user } = useAppSelector((state) => state.authReducer);
+  const { isAuth } = useAppSelector((state) => state.authReducer);
   const navigate = useNavigate();
-  const { t } = useTranslations();
-  const [logoutUser, { isError, isSuccess, isLoading, error }] =
-    useLogoutUserMutation();
-
-  useEffect(() => {
-    if (isSuccess) {
-      toast.success(t["logout.success"]);
-    }
-    if (isError) {
-      if (Array.isArray((error as any).data.error)) {
-        (error as any).data.error.forEach((el: any) =>
-          toast.error(el.message, {
-            position: "top-right",
-          })
-        );
-      } else {
-        toast.error(t["logout.error"], {
-          position: "top-right",
-        });
-      }
-    }
-  }, [isLoading, isError, isSuccess, error, t]);
 
   return (
     <Styles.Header>
@@ -50,10 +24,6 @@ const Header = () => {
             {isAuth ? (
               <>
                 <ProfileButton handleClick={() => navigate("/profile")} />
-                <AuthButton
-                  type="logout"
-                  handleClick={() => logoutUser({ user })}
-                />
               </>
             ) : (
               <>
