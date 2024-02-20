@@ -7,6 +7,18 @@ import {
 import { API_URL } from "./constants";
 import { logoutUser } from "../store/slices/auth/auth.slice";
 import { Mutex } from "async-mutex";
+
+interface RefreshResponseData {
+  accessToken: string;
+}
+
+function isRefreshResponseData(data: unknown): data is RefreshResponseData {
+  if (data) {
+    return typeof data === "object" && "accessToken" in data;
+  }
+  return false;
+}
+
 const mutex = new Mutex();
 
 const baseQuery = fetchBaseQuery({
@@ -38,9 +50,10 @@ const baseQueryWithReauth: BaseQueryFn<
           extraOptions
         );
         if (refreshResult.data) {
-          // @ts-ignore
-          localStorage.setItem("token", refreshResult.data.accessToken);
-          result = await baseQuery(args, api, extraOptions);
+          if (isRefreshResponseData(refreshResult.data)) {
+            localStorage.setItem("token", refreshResult.data.accessToken);
+            result = await baseQuery(args, api, extraOptions);
+          }
         } else {
           api.dispatch(logoutUser());
         }

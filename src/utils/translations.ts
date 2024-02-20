@@ -45,6 +45,8 @@ export const translations = {
     "not_found_page.returnLink": "Back to main page",
     "error.unexistingProduct": "Oops... seems like this product doesnt exist!",
     "error.unexpectedError": "Something went wrong...",
+
+    "filter.category.color": "Color",
   },
   ua: {
     "header.buttons.cart": "Кошик",
@@ -92,5 +94,7 @@ export const translations = {
     "not_found_page.returnLink": "Повернутись на головну",
     "error.unexistingProduct": "Йой... здається такого товару не існує!",
     "error.unexpectedError": "Щось пішло не так...",
+
+    "filter.category.color": "Колір",
   },
 };

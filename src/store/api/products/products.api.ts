@@ -17,7 +17,16 @@ export const productsApi = createApi({
         },
       }
     ),
+    getFilters: builder.mutation({
+      query: (data) => {
+        return {
+          url: `getAllFilters`,
+          method: "POST",
+          body: { filters: data },
+        };
+      },
+    }),
   }),
 });
 
-export const { useGetSingleProductQuery } = productsApi;
+export const { useGetSingleProductQuery, useGetFiltersMutation } = productsApi;

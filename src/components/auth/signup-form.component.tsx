@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { ISignUpInputs } from "../../types/auth.types";
 import { useTranslations } from "../../hooks/useTranslations";
+import { useToastError } from "../../hooks/useToastError";
 
 const schema = yup.object({
   email: yup
@@ -33,9 +34,9 @@ const schema = yup.object({
 const SignUpForm = () => {
   const navigate = useNavigate();
   const { t, isKeyOf } = useTranslations();
-  const [registerUser, { isSuccess, isError, error }] =
-    useRegisterUserMutation();
+  const [registerUser, { isSuccess, error }] = useRegisterUserMutation();
 
+  const { toastError, errorShownRef } = useToastError();
   const {
     register,
     handleSubmit,
@@ -47,22 +48,19 @@ const SignUpForm = () => {
       toast.success(t["signup_page.toast.success"]);
       navigate("/login");
     }
-    if (isError) {
-      if (Array.isArray((error as any).data.error)) {
-        (error as any).data.error.forEach((el: any) =>
-          toast.error(el.message, {
-            position: "top-right",
-          })
-        );
-      } else {
-        toast.error(t["signup_page.toast.error"], {
-          position: "top-right",
-        });
-      }
-    }
-  }, [isError, isSuccess, navigate, error, t]);
+  }, [t, isSuccess, navigate]);
 
-  const onSubmit: SubmitHandler<ISignUpInputs> = (data) => registerUser(data);
+  useEffect(() => {
+    if (error && !errorShownRef.current) {
+      toastError(error);
+      errorShownRef.current = true;
+    }
+  }, [error, toastError, errorShownRef]);
+
+  const onSubmit: SubmitHandler<ISignUpInputs> = (data) => {
+    errorShownRef.current = false;
+    registerUser(data);
+  };
 
   return (
     <Styles.AuthFormWrapper>

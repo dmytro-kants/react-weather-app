@@ -6,7 +6,7 @@ const initialState: IAuthSliceState = {
   user: {},
   isAuth: false,
   isLoading: false,
-  userAuthCheck: localStorage.getItem("token") ? true : false,
+  userAuthCheck: true,
   error: null,
 };
 

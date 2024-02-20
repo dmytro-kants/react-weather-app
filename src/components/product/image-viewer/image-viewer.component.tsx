@@ -25,7 +25,7 @@ const ImageViewerComponent: FC<ImageViewerComponentProps> = ({ images }) => {
     setIsViewerOpen(false);
   };
   return (
-    <div>
+    <Styles.ProductImagesWrapper>
       <Styles.ProductComponentMainImage
         src={images[0]}
         onClick={() => openImageViewer(0)}
@@ -37,7 +37,7 @@ const ImageViewerComponent: FC<ImageViewerComponentProps> = ({ images }) => {
             return (
               <Styles.ProductComponentSecondaryImage
                 src={src}
-                onClick={() => openImageViewer(0)}
+                onClick={() => openImageViewer(index)}
                 key={index}
                 alt=""
               />
@@ -51,15 +51,15 @@ const ImageViewerComponent: FC<ImageViewerComponentProps> = ({ images }) => {
         <ImageViewer
           src={images}
           currentIndex={currentImage}
-          disableScroll={false}
-          closeOnClickOutside={true}
+          disableScroll
+          closeOnClickOutside
           onClose={closeImageViewer}
           backgroundStyle={{
             backgroundColor: "rgba(0,0,0,0.8)",
           }}
         />
       )}
-    </div>
+    </Styles.ProductImagesWrapper>
   );
 };
 

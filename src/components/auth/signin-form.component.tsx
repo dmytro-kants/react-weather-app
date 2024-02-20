@@ -8,32 +8,27 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { ISignInInputs } from "../../types/auth.types";
+import { useToastError } from "../../hooks/useToastError";
 
 const SignInForm = () => {
   const { t, isKeyOf } = useTranslations();
   const navigate = useNavigate();
-  const [loginUser, { isError, isLoading, isSuccess, error }] =
-    useLoginUserMutation();
+  const [loginUser, { isSuccess, error }] = useLoginUserMutation();
+  const { toastError, errorShownRef } = useToastError();
 
   useEffect(() => {
     if (isSuccess) {
       toast.success(t["signin_page.toast.success"]);
       navigate("/");
     }
-    if (isError) {
-      if (Array.isArray((error as any).data.error)) {
-        (error as any).data.error.forEach((el: any) =>
-          toast.error(el.message, {
-            position: "top-right",
-          })
-        );
-      } else {
-        toast.error(t["signin_page.toast.error"], {
-          position: "top-right",
-        });
-      }
+  }, [navigate, isSuccess, t]);
+
+  useEffect(() => {
+    if (error && !errorShownRef.current) {
+      toastError(error);
+      errorShownRef.current = true;
     }
-  }, [isLoading, navigate, isSuccess, isError, error, t]);
+  }, [error, toastError, errorShownRef]);
 
   const schema = yup.object({
     email: yup
@@ -49,7 +44,10 @@ const SignInForm = () => {
     formState: { errors },
   } = useForm<ISignInInputs>({ resolver: yupResolver(schema) });
 
-  const onSubmit: SubmitHandler<ISignInInputs> = (data) => loginUser(data);
+  const onSubmit: SubmitHandler<ISignInInputs> = (data) => {
+    errorShownRef.current = false;
+    loginUser(data);
+  };
 
   return (
     <Styles.AuthFormWrapper>

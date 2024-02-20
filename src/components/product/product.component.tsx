@@ -4,6 +4,7 @@ import ProductSpinner from "../common/loading-spinners/product-spinner/product-s
 import ErrorComponent from "../common/error/error.component";
 import * as Styles from "./styles";
 import ImageViewerComponent from "./image-viewer/image-viewer.component";
+import InfoContainerComponent from "./info-container/info-container.component";
 
 const ProductComponent = () => {
   const { productCode } = useParams();
@@ -23,7 +24,10 @@ const ProductComponent = () => {
   if (isSuccess) {
     return (
       <Styles.ProductComponent>
-        <ImageViewerComponent images={data.images} />
+        <Styles.ProductContainerMain>
+          <ImageViewerComponent images={data.images} />
+          <InfoContainerComponent data={data} />
+        </Styles.ProductContainerMain>
       </Styles.ProductComponent>
     );
   }

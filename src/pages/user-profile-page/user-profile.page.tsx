@@ -11,26 +11,19 @@ const UserProfilePage = () => {
   const navigate = useNavigate();
   const { isAuth, user } = useAppSelector((state) => state.authReducer);
   const { t } = useTranslations();
-  const [logoutUser, { isError, isSuccess, error }] = useLogoutUserMutation();
+  const [logoutUser, { isError, isSuccess }] = useLogoutUserMutation();
 
   useEffect(() => {
     if (isSuccess) {
       toast.success(t["logout.success"]);
     }
     if (isError) {
-      if (Array.isArray((error as any).data.error)) {
-        (error as any).data.error.forEach((el: any) =>
-          toast.error(el.message, {
-            position: "top-right",
-          })
-        );
-      } else {
-        toast.error(t["logout.error"], {
-          position: "top-right",
-        });
-      }
+      toast.error(t["logout.error"], {
+        position: "top-right",
+      });
     }
-  }, [isError, isSuccess, error, t]);
+  }, [isError, isSuccess, t]);
+
   useEffect(() => {
     if (!isAuth) {
       navigate("/login");

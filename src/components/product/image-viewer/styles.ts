@@ -1,13 +1,21 @@
 import styled from "styled-components";
 
+export const ProductImagesWrapper = styled.div`
+  width: 490px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 510px;
+`;
+
 export const ProductComponentMainImage = styled.img`
   width: 400px;
-  padding-left: 60px;
+  cursor: pointer;
 `;
 
 export const ProductComponentImagesContainer = styled.div`
   display: flex;
-  max-width: 525px;
+  width: 100%;
   overflow-x: auto;
   white-space: nowrap;
   &::-webkit-scrollbar {
@@ -30,4 +38,5 @@ export const ProductComponentImagesContainer = styled.div`
 export const ProductComponentSecondaryImage = styled.img`
   width: 100px;
   padding-right: 5px;
+  cursor: pointer;
 `;
