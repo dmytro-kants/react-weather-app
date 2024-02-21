@@ -39,12 +39,14 @@ const ResultProductsComponent: FC<ResultProductsComponentProps> = ({
               {" "}
               Price: {e.price}
               <ul>
-                {Object.entries(e.additionalInfo).map(([key, info]) => (
-                  <li key={key}>
-                    <strong>{info.translations[lang].label}:</strong>{" "}
-                    {info.translations[lang].value}
-                  </li>
-                ))}
+                {(Object.entries(e.additionalInfo) as [string, any][]).map(
+                  ([key, info]) => (
+                    <li key={key}>
+                      <strong>{(info as any).translations[lang].label}:</strong>{" "}
+                      {(info as any).translations[lang].value}
+                    </li>
+                  )
+                )}
               </ul>
             </>
           );
