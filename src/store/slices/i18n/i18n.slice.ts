@@ -20,8 +20,6 @@ export const i18nSlice = createSlice({
       state.lang = action.payload;
     },
     addTrans: (state, action: PayloadAction<{ [key: string]: string }>) => {
-      console.log(action);
-
       state.translations = {
         ...state.translations,
         en: {

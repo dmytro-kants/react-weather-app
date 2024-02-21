@@ -6,6 +6,7 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 export const productsApi = createApi({
   reducerPath: "productsApi",
   baseQuery: fetchBaseQuery({ baseUrl: API_URL }),
+  tagTypes: ["Products"],
   endpoints: (builder) => ({
     getSingleProduct: builder.query<ISingleProductResponse, string | undefined>(
       {
@@ -17,16 +18,30 @@ export const productsApi = createApi({
         },
       }
     ),
-    getFilters: builder.mutation({
-      query: (data) => {
+    getFilteredProducts: builder.query({
+      query: (filters) => {
         return {
-          url: `getAllFilters`,
-          method: "POST",
-          body: { filters: data },
+          url: `getFilteredProducts`,
+          method: "GET",
+          params: filters,
+        };
+      },
+      providesTags: ["Products"],
+    }),
+    updateFilters: builder.query({
+      query: (filters) => {
+        return {
+          url: `updateFilters`,
+          method: "GET",
+          params: filters,
         };
       },
     }),
   }),
 });
 
-export const { useGetSingleProductQuery, useGetFiltersMutation } = productsApi;
+export const {
+  useGetSingleProductQuery,
+  useGetFilteredProductsQuery,
+  useUpdateFiltersQuery,
+} = productsApi;

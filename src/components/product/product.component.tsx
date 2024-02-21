@@ -10,7 +10,6 @@ const ProductComponent = () => {
   const { productCode } = useParams();
   const { data, isLoading, isSuccess, isError } =
     useGetSingleProductQuery(productCode);
-  console.log(data);
 
   if (isLoading) {
     return <ProductSpinner />;

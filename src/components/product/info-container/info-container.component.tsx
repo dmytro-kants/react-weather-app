@@ -9,7 +9,6 @@ interface InfoContainerComponentProps {
 
 const InfoContainerComponent: FC<InfoContainerComponentProps> = ({ data }) => {
   const { lang } = useTranslations();
-  console.log(data);
 
   return (
     <Styles.InfoWrapper>
