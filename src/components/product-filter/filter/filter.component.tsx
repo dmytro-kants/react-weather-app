@@ -18,7 +18,11 @@ const FilterComponent: FC<FilterComponentProps> = ({
 }) => {
   const [
     triggerFilters,
-    { data: filtersData, isLoading: filtersIsLoading, isError: filtersIsError },
+    {
+      data: filtersData,
+      isFetching: filtersIsFetching,
+      isError: filtersIsError,
+    },
   ] = productsApi.endpoints.updateFilters.useLazyQuery();
 
   const { lang } = useTranslations();
@@ -28,7 +32,7 @@ const FilterComponent: FC<FilterComponentProps> = ({
     triggerFilters(filters, true);
   }, [searchParams, triggerFilters]);
 
-  if (filtersIsLoading) {
+  if (filtersIsFetching) {
     return <>...loading</>;
   }
 

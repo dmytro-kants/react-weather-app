@@ -13,7 +13,7 @@ const ResultProductsComponent: FC<ResultProductsComponentProps> = ({
     triggerProducts,
     {
       data: productsData,
-      isLoading: productsIsLoading,
+      isFetching: productsIsFetching,
       isError: productsIsError,
     },
   ] = productsApi.endpoints.getFilteredProducts.useLazyQuery();
@@ -23,7 +23,7 @@ const ResultProductsComponent: FC<ResultProductsComponentProps> = ({
     triggerProducts(filters, true);
   }, [searchParams, triggerProducts]);
 
-  if (productsIsLoading) {
+  if (productsIsFetching) {
     return <>...loading</>;
   }
 
