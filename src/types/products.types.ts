@@ -1,22 +1,83 @@
-export interface ISingleProductResponse {
-  name: {
-    en: string;
-    ua: string;
-  };
+import { LazyQueryTrigger } from "@reduxjs/toolkit/dist/query/react/buildHooks";
+import {
+  BaseQueryFn,
+  FetchArgs,
+  FetchBaseQueryError,
+  FetchBaseQueryMeta,
+  QueryDefinition,
+} from "@reduxjs/toolkit/query";
+
+interface Translation {
+  value: string;
+  label?: string;
+}
+
+interface Translations {
+  en: Translation;
+  ua: Translation;
+}
+
+interface AdditionalInfoItem {
+  value: string;
+  translations: Translations;
+}
+
+interface AdditionalInfo {
+  [key: string]: AdditionalInfoItem;
+}
+
+export interface IProduct {
   price: number;
   productCode: string;
   images: string[];
-  category: string;
-  additionalInfo: {
-    en: {
-      name: string;
-      value?: string;
-    };
-    ua: {
-      name: string;
-      value?: string;
-    };
-  }[];
+  name: {
+    value: string;
+    translations: Translations;
+  };
+  category: {
+    value: string;
+    translations: Translations;
+  };
+  subcategory: {
+    value: string;
+    translations: Translations;
+  };
+  additionalInfo: AdditionalInfo;
+}
+//////////////////////////////////////////////////////////////////////////
+interface FilterValue {
+  count: number;
+  filterKey: string;
+  translations: Translations;
 }
 
-///////////////////////////////////////
+export interface IFilter {
+  key: string;
+  values: FilterValue[];
+}
+
+export interface ProductSliceInitialState {
+  minPrice: number;
+  maxPrice: number;
+}
+//////////////////////////////////////////
+export interface ITriggerProduct
+  extends LazyQueryTrigger<
+    QueryDefinition<
+      {
+        filterParams: string;
+        category: string;
+        subcategory: string;
+      },
+      BaseQueryFn<
+        string | FetchArgs,
+        unknown,
+        FetchBaseQueryError,
+        {},
+        FetchBaseQueryMeta
+      >,
+      never,
+      IProduct[],
+      "productsApi"
+    >
+  > {}

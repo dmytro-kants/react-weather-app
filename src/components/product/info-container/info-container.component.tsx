@@ -1,10 +1,10 @@
 import { FC } from "react";
-import { ISingleProductResponse } from "../../../types/products.types";
 import * as Styles from "./styles";
 import { useTranslations } from "../../../hooks/useTranslations";
+import { IProduct } from "../../../types/products.types";
 
 interface InfoContainerComponentProps {
-  data: ISingleProductResponse;
+  data: IProduct;
 }
 
 const InfoContainerComponent: FC<InfoContainerComponentProps> = ({ data }) => {
@@ -12,20 +12,25 @@ const InfoContainerComponent: FC<InfoContainerComponentProps> = ({ data }) => {
 
   return (
     <Styles.InfoWrapper>
-      <Styles.InfoName>{data.name[lang]}</Styles.InfoName>
+      <Styles.InfoName>{data.name.translations[lang].value}</Styles.InfoName>
       <Styles.InfoProductCode>
         Код товару: {data.productCode}
       </Styles.InfoProductCode>
       <Styles.InfoProductPrice>💰 {data.price} грн.</Styles.InfoProductPrice>
-      {data.additionalInfo.map((el) => {
+      {Object.entries(data.additionalInfo).map(([key, element]) => {
+        if (!element.translations[lang].value) {
+          return null;
+        }
         return (
-          <p>
-            {el[lang].name} : {el[lang].value}
-          </p>
+          <div key={key}>
+            <p>
+              {element.translations[lang]?.label}:{" "}
+              {element.translations[lang].value}
+            </p>
+          </div>
         );
       })}
     </Styles.InfoWrapper>
   );
 };
-
 export default InfoContainerComponent;

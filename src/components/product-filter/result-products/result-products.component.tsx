@@ -1,26 +1,29 @@
 import { useTranslations } from "../../../hooks/useTranslations";
-import { productsApi } from "../../../store/api/products/products.api";
 import { FC, useEffect } from "react";
+import { IProduct, ITriggerProduct } from "../../../types/products.types";
 
 type ResultProductsComponentProps = {
   searchParams: URLSearchParams;
+  productsData: IProduct[] | undefined;
+  productsIsFetching: boolean;
+  productsIsError: boolean;
+  triggerProducts: ITriggerProduct;
 };
 
 const ResultProductsComponent: FC<ResultProductsComponentProps> = ({
   searchParams,
+  productsData,
+  productsIsError,
+  productsIsFetching,
+  triggerProducts,
 }) => {
-  const [
-    triggerProducts,
-    {
-      data: productsData,
-      isFetching: productsIsFetching,
-      isError: productsIsError,
-    },
-  ] = productsApi.endpoints.getFilteredProducts.useLazyQuery();
   const { lang } = useTranslations();
+
   useEffect(() => {
-    const filters = searchParams.toString();
-    triggerProducts(filters, true);
+    const filterParams = searchParams.toString();
+    let category: string = "";
+    let subcategory: string = "";
+    triggerProducts({ filterParams, category, subcategory }, true);
   }, [searchParams, triggerProducts]);
 
   if (productsIsFetching) {
@@ -33,22 +36,23 @@ const ResultProductsComponent: FC<ResultProductsComponentProps> = ({
   return (
     <>
       {productsData &&
-        productsData.map((e: any) => {
+        productsData.map((entries) => {
           return (
-            <>
+            <div
+              style={{ border: "solid 1px black" }}
+              key={entries.productCode}
+            >
               {" "}
-              Price: {e.price}
+              Price: {entries.price}
               <ul>
-                {(Object.entries(e.additionalInfo) as [string, any][]).map(
-                  ([key, info]) => (
-                    <li key={key}>
-                      <strong>{(info as any).translations[lang].label}:</strong>{" "}
-                      {(info as any).translations[lang].value}
-                    </li>
-                  )
-                )}
+                {Object.entries(entries.additionalInfo).map(([key, info]) => (
+                  <li key={key}>
+                    <strong>{info.translations[lang].label}:</strong>{" "}
+                    {info.translations[lang].value}
+                  </li>
+                ))}
               </ul>
-            </>
+            </div>
           );
         })}
     </>

@@ -7,7 +7,7 @@ const MainSpinner = () => {
     <BaseContainer>
       <Styles.MainSpinner>
         <Styles.MainSpinnerText>
-          <p>Weather React App is loading...</p> <p>Please Wait!🙏</p>
+          <p>Furniture React App is loading...</p> <p>Please Wait!🙏</p>
         </Styles.MainSpinnerText>
         <Rings
           visible={true}
