@@ -1,27 +1,24 @@
 import { useTranslations } from "../../../hooks/useTranslations";
-import { FC, useEffect } from "react";
-import { IProduct, ITriggerProduct } from "../../../types/products.types";
+import { useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
+import { productsApi } from "../../../store/api/products/products.api";
 
-type ResultProductsComponentProps = {
-  searchParams: URLSearchParams;
-  productsData: IProduct[] | undefined;
-  productsIsFetching: boolean;
-  productsIsError: boolean;
-  triggerProducts: ITriggerProduct;
-};
-
-const ResultProductsComponent: FC<ResultProductsComponentProps> = ({
-  searchParams,
-  productsData,
-  productsIsError,
-  productsIsFetching,
-  triggerProducts,
-}) => {
+const ResultProductsComponent = () => {
   const { lang } = useTranslations();
+  const [searchParams] = useSearchParams();
+
+  const [
+    triggerProducts,
+    {
+      data: productsData,
+      isFetching: productsIsFetching,
+      isError: productsIsError,
+    },
+  ] = productsApi.endpoints.getFilteredProducts.useLazyQuery();
 
   useEffect(() => {
     const filterParams = searchParams.toString();
-    let category: string = "";
+    let category: string = "Category 1";
     let subcategory: string = "";
     triggerProducts({ filterParams, category, subcategory }, true);
   }, [searchParams, triggerProducts]);

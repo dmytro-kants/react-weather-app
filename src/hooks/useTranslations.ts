@@ -3,7 +3,7 @@ import { Languages } from "../types/i18n.types";
 import { translations } from "../utils/translations";
 import { useAppDispatch, useAppSelector } from "./redux-hooks";
 
-interface IUseTranslations {
+interface IUseTranslationsReturn {
   t: typeof translations.en;
   setCurrentLang: (lang: Languages) => void;
   lang: Languages;
@@ -15,7 +15,7 @@ interface IUseTranslations {
   addTranslate: (trans: { [key: string]: string }) => void;
 }
 
-export const useTranslations = (): IUseTranslations => {
+export const useTranslations = (): IUseTranslationsReturn => {
   const dispatch = useAppDispatch();
   const t = useAppSelector(
     (state) => state.i18nReducer.translations[state.i18nReducer.lang]

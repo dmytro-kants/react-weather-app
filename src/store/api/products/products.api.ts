@@ -28,7 +28,7 @@ export const productsApi = createApi({
       },
     }),
     updateFilters: builder.query<
-      IFilter[],
+      { filteredResults: IFilter[]; maxPrice: number; minPrice: number },
       { filterParams: string; category: string; subcategory: string }
     >({
       query: (filters) => {

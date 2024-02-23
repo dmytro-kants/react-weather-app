@@ -1,23 +1,13 @@
 import * as Styles from "./styles";
-import { ChangeEvent, FC, useEffect, useState } from "react";
-import { SetURLSearchParams } from "react-router-dom";
+import { useEffect } from "react";
 import { useTranslations } from "../../../hooks/useTranslations";
 import { productsApi } from "../../../store/api/products/products.api";
 import { Slider } from "@mui/material";
+import { formatQueryParams } from "../../../utils/formatQueryParams";
+import usePriceSlider from "../../../hooks/usePriceSlider";
+import { useNavigate } from "react-router-dom";
 
-type FilterComponentProps = {
-  searchParams: URLSearchParams;
-  setSearchParams: SetURLSearchParams;
-  handleFilterClick: (filterKey: string, value: string) => void;
-  minAndMaxPrices: { min: number; max: number } | undefined;
-};
-
-const FilterComponent: FC<FilterComponentProps> = ({
-  searchParams,
-  setSearchParams,
-  handleFilterClick,
-  minAndMaxPrices,
-}) => {
+const FilterComponent = () => {
   const [
     triggerFilters,
     {
@@ -28,94 +18,76 @@ const FilterComponent: FC<FilterComponentProps> = ({
   ] = productsApi.endpoints.updateFilters.useLazyQuery();
 
   const { lang } = useTranslations();
-  const [currentSliderValues, setCurrentSliderValues] = useState<number[]>([]);
 
-  const handleChange = (_: Event, newValue: number | number[]): void => {
-    if (Array.isArray(newValue)) {
-      setCurrentSliderValues(newValue);
+  const {
+    setSearchParams,
+    setCurrentSliderValues,
+    searchParams,
+    currentSliderValues,
+    handleChange,
+    handleMinInput,
+    handleMaxInput,
+    handleSubmitPriceRange,
+  } = usePriceSlider({ filtersData });
+  const handleReset = () => {
+    setSearchParams([]);
+    if (filtersData) {
+      setCurrentSliderValues([filtersData.minPrice, filtersData.maxPrice]);
     }
   };
-
-  const handleMinInput = (event: ChangeEvent<HTMLInputElement>): void => {
-    const newMinValue = Number(event.target.value);
-    if (minAndMaxPrices && newMinValue <= minAndMaxPrices.max) {
-      setCurrentSliderValues((prev) => [newMinValue, prev[1]]);
-    }
-  };
-
-  const handleMaxInput = (event: ChangeEvent<HTMLInputElement>): void => {
-    const newMaxValue = Number(event.target.value);
-    if (minAndMaxPrices && newMaxValue >= minAndMaxPrices.min) {
-      setCurrentSliderValues((prev) => [prev[0], newMaxValue]);
-    }
-  };
-
-  const handleSubmitPriceRange = () => {};
 
   useEffect(() => {
     const filterParams = searchParams.toString();
-    let category: string = "";
+    let category: string = "Category 1";
     let subcategory: string = "";
     triggerFilters({ filterParams, category, subcategory }, true);
   }, [searchParams, triggerFilters]);
 
   useEffect(() => {
-    if (filtersData && filtersData.every((item) => item.values.length === 0)) {
+    if (filtersIsError) {
       setSearchParams([]);
     }
-  }, [filtersData, setSearchParams]);
-
-  useEffect(() => {
-    if (minAndMaxPrices) {
-      setCurrentSliderValues([minAndMaxPrices.min, minAndMaxPrices.max]);
-    }
-  }, [minAndMaxPrices, setCurrentSliderValues]);
+  }, [filtersIsError]);
 
   if (filtersIsFetching) {
     return <>...loading</>;
   }
 
-  if (filtersIsError) {
-    return <>oops, error</>;
-  }
-
   return (
     <Styles.FilterWrapper>
-      {minAndMaxPrices ? (
+      {filtersData ? (
         <>
-          <button onClick={() => setSearchParams([])}>reset</button>
+          <button onClick={handleReset}>reset</button>
           <input
-            type="number"
-            value={currentSliderValues[0]}
+            value={currentSliderValues[0] || 0}
             onChange={(e) => handleMinInput(e)}
+            min={currentSliderValues[0]}
+            max={filtersData.maxPrice}
           />{" "}
           -{" "}
           <input
-            type="number"
-            value={currentSliderValues[1]}
-            onChange={handleMaxInput}
+            value={currentSliderValues[1] || 1}
+            onChange={(e) => handleMaxInput(e)}
+            min={filtersData.minPrice}
+            max={currentSliderValues[1]}
           />{" "}
           грн.
           <button onClick={handleSubmitPriceRange}>Ok</button>
-          {minAndMaxPrices.min !== minAndMaxPrices.max &&
-          minAndMaxPrices.max !== -Infinity &&
-          minAndMaxPrices.min !== Infinity ? (
-            <Slider
-              getAriaLabel={() => "Price Range"}
-              value={currentSliderValues}
-              min={minAndMaxPrices.min}
-              max={minAndMaxPrices.max}
-              onChange={handleChange}
-              valueLabelDisplay="auto"
-              aria-labelledby="range-slider"
-              disableSwap
-            />
-          ) : null}
+          <Slider
+            getAriaLabel={() => "Price Range"}
+            value={currentSliderValues}
+            min={filtersData.minPrice}
+            max={filtersData.maxPrice}
+            onChange={handleChange}
+            valueLabelDisplay="auto"
+            aria-labelledby="range-slider"
+            disableSwap
+          />
         </>
       ) : null}
 
       {filtersData &&
-        filtersData.map((filter) => {
+        filtersData.filteredResults.map((filter) => {
           if (filter.values.length > 0) {
             return (
               <div key={filter.key}>
@@ -128,7 +100,9 @@ const FilterComponent: FC<FilterComponentProps> = ({
                           <p
                             key={element.filterKey}
                             onClick={() =>
-                              handleFilterClick(
+                              formatQueryParams(
+                                searchParams,
+                                setSearchParams,
                                 filter.key,
                                 element.translations.en.value
                               )
@@ -143,7 +117,9 @@ const FilterComponent: FC<FilterComponentProps> = ({
                           style={{ color: "green", fontWeight: "bold" }}
                           key={element.filterKey}
                           onClick={() =>
-                            handleFilterClick(
+                            formatQueryParams(
+                              searchParams,
+                              setSearchParams,
                               filter.key,
                               element.translations.en.value
                             )
