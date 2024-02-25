@@ -8,18 +8,17 @@ export const formatQueryParams = (
 ) => {
   const newParams = searchParams;
 
-  if (filterKey === "gt" || filterKey === "lt") {
-    if (newParams.has(filterKey)) {
-      newParams.set(filterKey, value);
-    } else {
-      newParams.append(filterKey, value);
-    }
+  if (["gt", "lt", "page"].includes(filterKey)) {
+    newParams.set(filterKey, value);
+  } else if (filterKey === "sort") {
+    newParams.set(filterKey, value);
+    newParams.set("page", "1");
   } else {
-    let currentValues = newParams.getAll(filterKey);
-    currentValues = currentValues[0]?.split(",") || [];
+    const currentValues = newParams.getAll(filterKey);
+    const index = currentValues.indexOf(value);
 
-    if (currentValues.includes(value)) {
-      currentValues = currentValues.filter((val) => val !== value);
+    if (index !== -1) {
+      currentValues.splice(index, 1);
     } else {
       currentValues.push(value);
     }
@@ -31,5 +30,5 @@ export const formatQueryParams = (
     }
   }
 
-  setSearchParams(newParams.toString());
+  setSearchParams(newParams);
 };

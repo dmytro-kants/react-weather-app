@@ -1,7 +1,7 @@
 import { fetchBaseQuery } from "@reduxjs/toolkit/query";
 import { API_URL } from "../../../utils/constants";
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { IFilter, IProduct } from "../../../types/products.types";
+import { IFilter, IProduct, Subcategory } from "../../../types/products.types";
 
 export const productsApi = createApi({
   reducerPath: "productsApi",
@@ -15,9 +15,21 @@ export const productsApi = createApi({
         };
       },
     }),
+    getSubcategories: builder.query<Subcategory[], string | undefined>({
+      query: (data) => {
+        return {
+          url: `getSubcategories?category=${data}`,
+          method: "GET",
+        };
+      },
+    }),
     getFilteredProducts: builder.query<
-      IProduct[],
-      { filterParams: string; category: string; subcategory: string }
+      { products: IProduct[]; maxPage: number },
+      {
+        filterParams: string;
+        category: string;
+        subcategory: string;
+      }
     >({
       query: (filters) => {
         return {
@@ -46,4 +58,5 @@ export const {
   useGetSingleProductQuery,
   useGetFilteredProductsQuery,
   useUpdateFiltersQuery,
+  useGetSubcategoriesQuery,
 } = productsApi;

@@ -5,7 +5,7 @@ import { productsApi } from "../../../store/api/products/products.api";
 import { Slider } from "@mui/material";
 import { formatQueryParams } from "../../../utils/formatQueryParams";
 import usePriceSlider from "../../../hooks/usePriceSlider";
-import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 const FilterComponent = () => {
   const [
@@ -18,7 +18,7 @@ const FilterComponent = () => {
   ] = productsApi.endpoints.updateFilters.useLazyQuery();
 
   const { lang } = useTranslations();
-
+  const { category, subcategory } = useParams();
   const {
     setSearchParams,
     setCurrentSliderValues,
@@ -29,6 +29,7 @@ const FilterComponent = () => {
     handleMaxInput,
     handleSubmitPriceRange,
   } = usePriceSlider({ filtersData });
+
   const handleReset = () => {
     setSearchParams([]);
     if (filtersData) {
@@ -37,17 +38,21 @@ const FilterComponent = () => {
   };
 
   useEffect(() => {
-    const filterParams = searchParams.toString();
-    let category: string = "Category 1";
-    let subcategory: string = "";
-    triggerFilters({ filterParams, category, subcategory }, true);
-  }, [searchParams, triggerFilters]);
+    triggerFilters(
+      {
+        filterParams: searchParams.toString(),
+        category: category || "",
+        subcategory: subcategory || "",
+      },
+      true
+    );
+  }, [searchParams, triggerFilters, category, subcategory]);
 
   useEffect(() => {
     if (filtersIsError) {
       setSearchParams([]);
     }
-  }, [filtersIsError]);
+  }, [filtersIsError, setSearchParams]);
 
   if (filtersIsFetching) {
     return <>...loading</>;

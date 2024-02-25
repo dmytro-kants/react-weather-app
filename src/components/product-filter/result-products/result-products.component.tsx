@@ -1,12 +1,14 @@
 import { useTranslations } from "../../../hooks/useTranslations";
-import { useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+import { ChangeEvent, useEffect } from "react";
+import { useParams, useSearchParams } from "react-router-dom";
 import { productsApi } from "../../../store/api/products/products.api";
+import { formatQueryParams } from "../../../utils/formatQueryParams";
+import { Pagination, Stack, Typography } from "@mui/material";
 
 const ResultProductsComponent = () => {
   const { lang } = useTranslations();
-  const [searchParams] = useSearchParams();
-
+  const [searchParams, setSearchParams] = useSearchParams();
+  const { category, subcategory } = useParams();
   const [
     triggerProducts,
     {
@@ -16,12 +18,24 @@ const ResultProductsComponent = () => {
     },
   ] = productsApi.endpoints.getFilteredProducts.useLazyQuery();
 
+  const handleSortByChange = (e: ChangeEvent<HTMLSelectElement>): void => {
+    formatQueryParams(searchParams, setSearchParams, "sort", e.target.value);
+  };
+
+  const handlePageChange = (_: ChangeEvent<unknown>, page: number): void => {
+    formatQueryParams(searchParams, setSearchParams, "page", String(page));
+  };
+
   useEffect(() => {
-    const filterParams = searchParams.toString();
-    let category: string = "Category 1";
-    let subcategory: string = "";
-    triggerProducts({ filterParams, category, subcategory }, true);
-  }, [searchParams, triggerProducts]);
+    triggerProducts(
+      {
+        filterParams: searchParams.toString(),
+        category: category || "",
+        subcategory: subcategory || "",
+      },
+      true
+    );
+  }, [searchParams, triggerProducts, category, subcategory]);
 
   if (productsIsFetching) {
     return <>...loading</>;
@@ -32,14 +46,24 @@ const ResultProductsComponent = () => {
   }
   return (
     <>
-      {productsData &&
-        productsData.map((entries) => {
+      <select
+        value={searchParams.get("sort") || "default"}
+        onChange={(e) => handleSortByChange(e)}
+      >
+        <option value="default">Релевантність</option>
+        <option value="price-asc">За зростанням ціни</option>
+        <option value="price-desc">За спаданням ціни</option>
+      </select>
+
+      {productsData && productsData.products.length > 0 ? (
+        productsData.products.map((entries) => {
           return (
             <div
               style={{ border: "solid 1px black" }}
               key={entries.productCode}
             >
               {" "}
+              Name: {entries.name.translations[lang].value}
               Price: {entries.price}
               <ul>
                 {Object.entries(entries.additionalInfo).map(([key, info]) => (
@@ -51,7 +75,18 @@ const ResultProductsComponent = () => {
               </ul>
             </div>
           );
-        })}
+        })
+      ) : (
+        <>No products found..</>
+      )}
+      <Stack spacing={2}>
+        <Typography>Page: {searchParams.get("page") || 1}</Typography>
+        <Pagination
+          count={productsData?.maxPage}
+          page={Number(searchParams.get("page")) || 1}
+          onChange={handlePageChange}
+        />
+      </Stack>
     </>
   );
 };

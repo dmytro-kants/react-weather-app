@@ -1,10 +1,21 @@
+import { Link } from "react-router-dom";
 import BaseContainer from "../../components/common/base-container/base-container.wrapper";
-import ProductFilterComponent from "../../components/product-filter/product-filter.component";
 
 const MainPage = () => {
   return (
     <BaseContainer>
-      <ProductFilterComponent />
+      <Link to="/search/beds">
+        <div>Beds</div>
+      </Link>
+      <Link to="/search/sofas">
+        <div>Sofas</div>
+      </Link>
+      <Link to="/search/chairs">
+        <div>Chairs</div>
+      </Link>
+      <Link to="/search/mattresses">
+        <div>Mattresses</div>
+      </Link>
     </BaseContainer>
   );
 };

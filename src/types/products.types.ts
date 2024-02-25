@@ -42,6 +42,7 @@ export interface IProduct {
     value: string;
     translations: Translations;
   };
+  filterParams: AdditionalInfo;
   additionalInfo: AdditionalInfo;
 }
 //////////////////////////////////////////////////////////////////////////
@@ -59,6 +60,14 @@ export interface IFilter {
 export interface ProductSliceInitialState {
   minPrice: number;
   maxPrice: number;
+}
+
+export interface Subcategory {
+  value: string;
+  translations: {
+    en: { value: string };
+    ua: { value: string };
+  };
 }
 //////////////////////////////////////////
 export interface ITriggerProduct

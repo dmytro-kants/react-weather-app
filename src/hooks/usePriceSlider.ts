@@ -63,10 +63,7 @@ const usePriceSlider = ({
   };
 
   useEffect(() => {
-    if (
-      Number(searchParams.get("gt") as string) >
-      Number(searchParams.get("lt") as string)
-    ) {
+    if (Number(searchParams.get("gt")) > Number(searchParams.get("lt"))) {
       searchParams.delete("gt");
       searchParams.delete("lt");
       setSearchParams(searchParams);
@@ -74,11 +71,11 @@ const usePriceSlider = ({
 
     if (filtersData) {
       setCurrentSliderValues([
-        Number(searchParams.get("gt")) || filtersData.minPrice,
-        Number(searchParams.get("lt")) || filtersData.maxPrice,
+        Number(searchParams.get("gt")) || filtersData.minPrice || 0,
+        Number(searchParams.get("lt")) || filtersData.maxPrice || 1,
       ]);
     }
-  }, [filtersData, setCurrentSliderValues, searchParams]);
+  }, [filtersData, setCurrentSliderValues, searchParams, setSearchParams]);
 
   return {
     setSearchParams,
